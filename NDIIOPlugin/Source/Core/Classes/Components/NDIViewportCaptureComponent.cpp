@@ -54,8 +54,11 @@ UNDIViewportCaptureComponent::UNDIViewportCaptureComponent(const FObjectInitiali
 	this->PostProcessSettings.bOverride_MotionBlurPerObjectSize = true;
 	this->PostProcessSettings.bOverride_MotionBlurTargetFPS = true;
 
-	// this->PostProcessSettings.ScreenPercentage = 100.0f;
-	// this->PostProcessSettings.bOverride_ScreenPercentage = true;
+
+	//this->PostProcessSettings.ScreenPercentage = 100.0f;
+	//this->PostProcessSettings.bOverride_ScreenPercentage = true;
+	
+
 
 	this->ViewportWidget = nullptr;
 	this->SceneViewport = nullptr;
@@ -166,6 +169,8 @@ void UNDIViewportCaptureComponent::ChangeCaptureSettings(FIntPoint InCaptureSize
 	// set the capture rate
 	this->CaptureRate = InCaptureRate;
 
+	
+
 	// clamp the maximum capture rate to something reasonable
 	float capture_rate_max = 1 / 1000.0f;
 	float capture_rate = CaptureRate.Denominator / (float)CaptureRate.Numerator;
@@ -246,6 +251,7 @@ void UNDIViewportCaptureComponent::InitializeComponent()
 		// define default capture values
 		const auto& capture_size = !bOverrideBroadcastSettings ? NDIMediaSource->GetFrameSize() : CaptureSize;
 		const auto& capture_rate = !bOverrideBroadcastSettings ? NDIMediaSource->GetFrameRate() : CaptureRate;
+
 
 		// change the capture sizes as necessary
 		ChangeCaptureSettings(capture_size, capture_rate);
@@ -388,7 +394,6 @@ void UNDIViewportCaptureComponent::EnsureViewInformation(bool ForceOverride)
 		EngineShowFlags.SetSeparateTranslucency(true);
 		EngineShowFlags.SetScreenPercentage(true);
 		EngineShowFlags.SetTemporalAA(true);
-
 		EngineShowFlags.SetScreenSpaceAO(true);
 		EngineShowFlags.SetScreenSpaceReflections(true);
 
@@ -411,12 +416,13 @@ void UNDIViewportCaptureComponent::EnsureViewInformation(bool ForceOverride)
 		ViewFamily->bRealtimeUpdate = true;
 		ViewFamily->bResolveScene = true;
 		ViewFamily->SceneCaptureSource = SCS_FinalColorLDR;
+		
 
 		// Ensure that the viewport is capturing the way we expect it to
 		ViewInitOptions.BackgroundColor = FLinearColor(0, 0, 0, 0);
 		ViewInitOptions.ViewFamily = ViewFamily;
 		ViewInitOptions.SceneViewStateInterface = ViewState.GetReference();
-		// ViewInitOptions.StereoPass = eSSP_FULL;
+		ViewInitOptions.StereoPass = EStereoscopicPass::eSSP_FULL;
 		ViewInitOptions.bUseFieldOfViewForLOD = ViewInfo.bUseFieldOfViewForLOD;
 		ViewInitOptions.FOV = ViewInfo.FOV;
 		ViewInitOptions.OverrideFarClippingPlaneDistance = 100000.0f;
