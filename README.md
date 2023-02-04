@@ -1,7 +1,9 @@
+NewTek has released a working plugin so this one should not be used anymore. Keeping it up as reference. 
+
 # NDIIOPlugin-UE5
 Modified NDIIOPlugin for UE5 (5.0.2)
 
-WORK IN PROGRESS
+
 
 ## Introduction
 
